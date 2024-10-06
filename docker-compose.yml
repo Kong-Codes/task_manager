@@ -16,7 +16,7 @@ services:
   web:
     build: .
     container_name: task_manager-api
-    command: fastapi dev src/server.py --host 0.0.0.0 --port 8000
+    command: fastapi run src/server.py --host 0.0.0.0 --port 8000
     volumes:
       - .:/task_manager_api
     ports:
