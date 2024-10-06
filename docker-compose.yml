@@ -1,0 +1,33 @@
+services:
+
+  db:
+    image: postgres:15
+    container_name: task_manager-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: timmy1202
+      POSTGRES_DB: task_manager
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+  web:
+    build: .
+    container_name: task_manager-api
+    command: fastapi dev src/server.py --host 0.0.0.0 --port 8000
+    volumes:
+      - .:/task_manager_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - SECRET=49d6287998a1bc4ec0adae24f40aece5f204d3936a174ba82d62172eb94d407f
+      - DATABASE_URL=postgresql://postgres:timmy1202@db:5432/task_manager
+
+
+
+volumes:
+  postgres_data:
